@@ -12,16 +12,9 @@ export default function Header({ currentPage, onNavigate }: HeaderProps) {
       <div className="max-w-6xl mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <button
-            onClick={() => onNavigate('converter')}
-            className="flex items-center gap-3 text-orange-600 hover:text-orange-700 transition-colors duration-200"
-          >
-            <Calculator className="w-8 h-8" />
-            <div className="text-left">
-              <h1 className="text-xl font-bold">मराठी संख्या रूपांतरक</h1>
-              <p className="text-sm text-gray-500">Marathi Number Converter</p>
-            </div>
-          </button>
+          <div className="flex items-center">
+            {/* Empty space for logo area */}
+          </div>
 
           {/* Navigation */}
           <nav className="flex items-center gap-6">
