@@ -135,28 +135,28 @@ export function convertToMarathiWords(num: number): string {
 
   let result = '';
 
-  // Lakh Crores (1,000,000,000,000 - 1 trillion)
-  if (num >= 1000000000000) {
-    const lakhCrores = Math.floor(num / 1000000000000);
+  // Lakh Crores (10,00,00,00,00,00,000 - 1 quadrillion in Indian system)
+  if (num >= 10000000000000) {
+    const lakhCrores = Math.floor(num / 10000000000000);
     result += convertToMarathiWords(lakhCrores) + ' लाख कोटी ';
-    num %= 1000000000000;
+    num %= 10000000000000;
   }
 
-  // Abj (1,000,000,000 - 1 billion = 100 crores)
+  // Abj (1,00,00,00,000 - 1 billion = 100 crores)
   if (num >= 1000000000) {
     const abj = Math.floor(num / 1000000000);
     result += convertToMarathiWords(abj) + ' अर्ब ';
     num %= 1000000000;
   }
 
-  // Crores (10,000,000)
+  // Crores (1,00,00,000)
   if (num >= 10000000) {
     const crores = Math.floor(num / 10000000);
     result += convertToMarathiWords(crores) + ' कोटी ';
     num %= 10000000;
   }
 
-  // Lakhs (100,000)
+  // Lakhs (1,00,000)
   if (num >= 100000) {
     const lakhs = Math.floor(num / 100000);
     result += convertToMarathiWords(lakhs) + ' लाख ';
