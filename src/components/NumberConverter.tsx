@@ -43,15 +43,6 @@ export default function NumberConverter() {
   return (
     <div className="max-w-4xl mx-auto p-6">
       <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
-        {/* Header */}
-        <div className="bg-gradient-to-r from-orange-500 to-red-600 px-8 py-6">
-          <div className="flex items-center gap-3 text-white">
-            <Calculator className="w-8 h-8" />
-            <h1 className="text-2xl font-bold">मराठी संख्या रूपांतरक</h1>
-          </div>
-          <p className="text-orange-100 mt-2">संख्या मराठी अंकात आणि शब्दांत रूपांतरित करा</p>
-        </div>
-
         {/* Input Section */}
         <div className="p-8">
           <div className="mb-8">
