@@ -29,7 +29,7 @@ function App() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-red-50">
       <Header currentPage={currentPage} onNavigate={handleNavigate} />
-      <div className="container mx-auto py-8">
+      <div className="container mx-auto py-4 sm:py-6 lg:py-8">
         {renderCurrentPage()}
       </div>
       <Footer onNavigate={handleNavigate} />

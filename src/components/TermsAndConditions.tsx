@@ -7,26 +7,26 @@ interface TermsAndConditionsProps {
 
 export default function TermsAndConditions({ onBack }: TermsAndConditionsProps) {
   return (
-    <div className="max-w-4xl mx-auto p-6">
+    <div className="max-w-4xl mx-auto p-4 sm:p-6">
       <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
         {/* Header */}
-        <div className="bg-gradient-to-r from-blue-500 to-indigo-600 px-8 py-6">
+        <div className="bg-gradient-to-r from-blue-500 to-indigo-600 px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
           <div className="flex items-center gap-3 text-white">
             <button
               onClick={onBack}
-              className="flex items-center gap-2 px-3 py-1 bg-white/20 hover:bg-white/30 rounded-lg transition-colors duration-200"
+              className="flex items-center gap-1 sm:gap-2 px-2 sm:px-3 py-1 bg-white/20 hover:bg-white/30 rounded-lg transition-colors duration-200 text-sm sm:text-base"
             >
-              <ArrowLeft className="w-4 h-4" />
+              <ArrowLeft className="w-3 h-3 sm:w-4 sm:h-4" />
               Back
             </button>
-            <FileText className="w-8 h-8" />
-            <h1 className="text-2xl font-bold">Terms and Conditions</h1>
+            <FileText className="w-6 h-6 sm:w-8 sm:h-8" />
+            <h1 className="text-lg sm:text-xl lg:text-2xl font-bold">Terms and Conditions</h1>
           </div>
-          <p className="text-blue-100 mt-2">नियम आणि अटी</p>
+          <p className="text-blue-100 mt-2 text-sm sm:text-base">नियम आणि अटी</p>
         </div>
 
         {/* Content */}
-        <div className="p-8 prose prose-gray max-w-none">
+        <div className="p-4 sm:p-6 lg:p-8 prose prose-gray max-w-none prose-sm sm:prose-base">
           <div className="space-y-6">
             <section>
               <h2 className="text-xl font-semibold text-gray-800 mb-3">1. Acceptance of Terms</h2>

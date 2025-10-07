@@ -41,16 +41,16 @@ export default function NumberConverter() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-6">
+    <div className="max-w-4xl mx-auto p-4 sm:p-6">
       <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
         {/* Input Section */}
-        <div className="p-8">
-          <div className="mb-8">
-            <label htmlFor="number-input" className="block text-lg font-semibold text-gray-700 mb-3">
+        <div className="p-4 sm:p-6 lg:p-8">
+          <div className="mb-6 sm:mb-8">
+            <label htmlFor="number-input" className="block text-base sm:text-lg font-semibold text-gray-700 mb-3">
               संख्या प्रविष्ट करा (Number Input)
             </label>
             <div className="relative">
-              <Hash className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+              <Hash className="absolute left-3 sm:left-4 top-1/2 transform -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-gray-400" />
               <input
                 id="number-input"
                 type="text"
@@ -63,11 +63,11 @@ export default function NumberConverter() {
                   }
                 }}
                 placeholder="उदा: 12345"
-                className="w-full pl-12 pr-4 py-4 text-lg border-2 border-gray-200 rounded-xl focus:border-orange-500 focus:ring-4 focus:ring-orange-100 transition-all duration-200 outline-none"
+                className="w-full pl-10 sm:pl-12 pr-3 sm:pr-4 py-3 sm:py-4 text-base sm:text-lg border-2 border-gray-200 rounded-xl focus:border-orange-500 focus:ring-4 focus:ring-orange-100 transition-all duration-200 outline-none"
               />
             </div>
             {number !== null && (
-              <div className="mt-3 text-sm text-gray-600">
+              <div className="mt-3 text-xs sm:text-sm text-gray-600">
                 Formatted: {formatNumberWithCommas(number)}
               </div>
             )}
@@ -75,62 +75,62 @@ export default function NumberConverter() {
 
           {/* Results Section */}
           {number !== null && (
-            <div className="space-y-6">
+            <div className="space-y-4 sm:space-y-6">
               {/* Marathi Numerals */}
-              <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-6 border border-blue-100">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center gap-2">
-                    <Hash className="w-5 h-5 text-blue-600" />
-                    <h3 className="text-lg font-semibold text-gray-800">मराठी अंक (Devanagari Numerals)</h3>
+              <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-4 sm:p-6 border border-blue-100">
+                <div className="flex items-center justify-between mb-3 sm:mb-4">
+                  <div className="flex items-center gap-2 flex-1 min-w-0">
+                    <Hash className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600 flex-shrink-0" />
+                    <h3 className="text-sm sm:text-lg font-semibold text-gray-800 truncate">मराठी अंक (Devanagari Numerals)</h3>
                   </div>
                   <button
                     onClick={() => handleCopy(marathiNumerals, 'numerals')}
-                    className="flex items-center gap-1 px-3 py-1 text-sm bg-blue-100 hover:bg-blue-200 text-blue-700 rounded-lg transition-colors duration-200"
+                    className="flex items-center gap-1 px-2 sm:px-3 py-1 text-xs sm:text-sm bg-blue-100 hover:bg-blue-200 text-blue-700 rounded-lg transition-colors duration-200 flex-shrink-0"
                   >
-                    {copied === 'numerals' ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
-                    {copied === 'numerals' ? 'Copied!' : 'Copy'}
+                    {copied === 'numerals' ? <Check className="w-3 h-3 sm:w-4 sm:h-4" /> : <Copy className="w-3 h-3 sm:w-4 sm:h-4" />}
+                    <span className="hidden sm:inline">{copied === 'numerals' ? 'Copied!' : 'Copy'}</span>
                   </button>
                 </div>
-                <div className="text-3xl font-bold text-blue-800 bg-white rounded-lg p-4 text-center">
+                <div className="text-xl sm:text-2xl lg:text-3xl font-bold text-blue-800 bg-white rounded-lg p-3 sm:p-4 text-center break-all">
                   {marathiNumerals}
                 </div>
               </div>
 
               {/* Marathi Words */}
-              <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-6 border border-green-100">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center gap-2">
-                    <Type className="w-5 h-5 text-green-600" />
-                    <h3 className="text-lg font-semibold text-gray-800">मराठी शब्द (Marathi Words)</h3>
+              <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-4 sm:p-6 border border-green-100">
+                <div className="flex items-center justify-between mb-3 sm:mb-4">
+                  <div className="flex items-center gap-2 flex-1 min-w-0">
+                    <Type className="w-4 h-4 sm:w-5 sm:h-5 text-green-600 flex-shrink-0" />
+                    <h3 className="text-sm sm:text-lg font-semibold text-gray-800 truncate">मराठी शब्द (Marathi Words)</h3>
                   </div>
                   <button
                     onClick={() => handleCopy(marathiWords, 'words')}
-                    className="flex items-center gap-1 px-3 py-1 text-sm bg-green-100 hover:bg-green-200 text-green-700 rounded-lg transition-colors duration-200"
+                    className="flex items-center gap-1 px-2 sm:px-3 py-1 text-xs sm:text-sm bg-green-100 hover:bg-green-200 text-green-700 rounded-lg transition-colors duration-200 flex-shrink-0"
                   >
-                    {copied === 'words' ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
-                    {copied === 'words' ? 'Copied!' : 'Copy'}
+                    {copied === 'words' ? <Check className="w-3 h-3 sm:w-4 sm:h-4" /> : <Copy className="w-3 h-3 sm:w-4 sm:h-4" />}
+                    <span className="hidden sm:inline">{copied === 'words' ? 'Copied!' : 'Copy'}</span>
                   </button>
                 </div>
-                <div className="text-2xl font-bold text-green-800 bg-white rounded-lg p-4 text-center leading-relaxed">
+                <div className="text-base sm:text-xl lg:text-2xl font-bold text-green-800 bg-white rounded-lg p-3 sm:p-4 text-center leading-relaxed break-words">
                   {marathiWords}
                 </div>
               </div>
 
               {/* Example Section */}
-              <div className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl p-6 border border-purple-100">
-                <h3 className="text-lg font-semibold text-gray-800 mb-4">संपूर्ण रूपांतरण (Complete Conversion)</h3>
-                <div className="space-y-3">
+              <div className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl p-4 sm:p-6 border border-purple-100">
+                <h3 className="text-base sm:text-lg font-semibold text-gray-800 mb-3 sm:mb-4">संपूर्ण रूपांतरण (Complete Conversion)</h3>
+                <div className="space-y-2 sm:space-y-3">
                   <div className="flex flex-col sm:flex-row sm:items-center gap-2">
-                    <span className="text-gray-600 font-medium min-w-[100px]">English:</span>
-                    <span className="text-lg font-bold text-purple-800">{formatNumberWithCommas(number)}</span>
+                    <span className="text-gray-600 font-medium text-sm sm:text-base min-w-[80px] sm:min-w-[100px]">English:</span>
+                    <span className="text-sm sm:text-lg font-bold text-purple-800 break-all">{formatNumberWithCommas(number)}</span>
                   </div>
                   <div className="flex flex-col sm:flex-row sm:items-center gap-2">
-                    <span className="text-gray-600 font-medium min-w-[100px]">Devanagari:</span>
-                    <span className="text-lg font-bold text-purple-800">{marathiNumerals}</span>
+                    <span className="text-gray-600 font-medium text-sm sm:text-base min-w-[80px] sm:min-w-[100px]">Devanagari:</span>
+                    <span className="text-sm sm:text-lg font-bold text-purple-800 break-all">{marathiNumerals}</span>
                   </div>
                   <div className="flex flex-col sm:flex-row sm:items-start gap-2">
-                    <span className="text-gray-600 font-medium min-w-[100px]">Words:</span>
-                    <span className="text-lg font-bold text-purple-800 leading-relaxed">{marathiWords}</span>
+                    <span className="text-gray-600 font-medium text-sm sm:text-base min-w-[80px] sm:min-w-[100px] flex-shrink-0">Words:</span>
+                    <span className="text-sm sm:text-lg font-bold text-purple-800 leading-relaxed break-words">{marathiWords}</span>
                   </div>
                 </div>
               </div>
@@ -139,12 +139,12 @@ export default function NumberConverter() {
 
           {/* Instructions */}
           {number === null && (
-            <div className="bg-gray-50 rounded-xl p-6 border border-gray-200">
-              <h3 className="text-lg font-semibold text-gray-800 mb-4">वापरकर्ता मार्गदर्शन (Instructions)</h3>
-              <div className="grid md:grid-cols-2 gap-6">
+            <div className="bg-gray-50 rounded-xl p-4 sm:p-6 border border-gray-200">
+              <h3 className="text-base sm:text-lg font-semibold text-gray-800 mb-3 sm:mb-4">वापरकर्ता मार्गदर्शन (Instructions)</h3>
+              <div className="grid lg:grid-cols-2 gap-4 sm:gap-6">
                 <div>
-                  <h4 className="font-semibold text-gray-700 mb-2">✨ वैशिष्ट्ये (Features)</h4>
-                  <ul className="text-gray-600 space-y-1 text-sm">
+                  <h4 className="font-semibold text-gray-700 mb-2 text-sm sm:text-base">✨ वैशिष्ट्ये (Features)</h4>
+                  <ul className="text-gray-600 space-y-1 text-xs sm:text-sm">
                     <li>• संख्या देवनागरी अंकांत रूपांतरित करा</li>
                     <li>• संख्या मराठी शब्दांत रूपांतरित करा</li>
                     <li>• ९९ लाख कोटींपर्यंत संख्यांचे समर्थन</li>
@@ -152,8 +152,8 @@ export default function NumberConverter() {
                   </ul>
                 </div>
                 <div>
-                  <h4 className="font-semibold text-gray-700 mb-2">📝 उदाहरणे (Examples)</h4>
-                  <ul className="text-gray-600 space-y-1 text-sm">
+                  <h4 className="font-semibold text-gray-700 mb-2 text-sm sm:text-base">📝 उदाहरणे (Examples)</h4>
+                  <ul className="text-gray-600 space-y-1 text-xs sm:text-sm">
                     <li>• <span className="font-mono">123</span> → <span className="font-bold">१२३</span></li>
                     <li>• <span className="font-mono">456</span> → <span className="font-bold">चारशे छप्पन्न</span></li>
                     <li>• <span className="font-mono">100</span> → <span className="font-bold">एकशे</span></li>
@@ -172,7 +172,7 @@ export default function NumberConverter() {
       </div>
 
       {/* Footer */}
-      <div className="text-center mt-8 text-gray-500">
+      <div className="text-center mt-6 sm:mt-8 text-gray-500 text-sm sm:text-base px-4">
         <p>मराठी भाषेतील संख्या रूपांतरण साधन</p>
       </div>
     </div>
