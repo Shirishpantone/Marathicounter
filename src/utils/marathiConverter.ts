@@ -142,6 +142,13 @@ export function convertToMarathiWords(num: number): string {
     num %= 1000000000000;
   }
 
+  // Abj (1,000,000,000 - 1 billion)
+  if (num >= 1000000000) {
+    const abj = Math.floor(num / 1000000000);
+    result += convertToMarathiWords(abj) + ' अर्ब ';
+    num %= 1000000000;
+  }
+
   // Crores (10,000,000)
   if (num >= 10000000) {
     const crores = Math.floor(num / 10000000);

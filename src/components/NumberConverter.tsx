@@ -157,8 +157,9 @@ export default function NumberConverter() {
                     <li>• <span className="font-mono">123</span> → <span className="font-bold">१२३</span></li>
                     <li>• <span className="font-mono">456</span> → <span className="font-bold">चारशे छप्पन्न</span></li>
                     <li>• <span className="font-mono">1000</span> → <span className="font-bold">एक हजार</span></li>
-                    <li>• <span className="font-mono">1000000</span> → <span className="font-bold">दहा लाख</span></li>
+                    <li>• <span className="font-mono">100000</span> → <span className="font-bold">एक लाख</span></li>
                     <li>• <span className="font-mono">10000000</span> → <span className="font-bold">एक कोटी</span></li>
+                    <li>• <span className="font-mono">1000000000</span> → <span className="font-bold">एक अर्ब</span></li>
                   </ul>
                 </div>
               </div>
