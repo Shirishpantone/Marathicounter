@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Calculator, Hash, Type, Copy, Check, Globe } from 'lucide-react';
+import { Calculator, Hash, Type, Copy, Check, Globe, ChevronDown } from 'lucide-react';
 import { convertToMarathiNumerals, convertToMarathiWords, formatNumberWithCommas } from '../utils/marathiConverter';
 
 export default function NumberConverter() {
@@ -9,6 +9,7 @@ export default function NumberConverter() {
   const [marathiWords, setMarathiWords] = useState('');
   const [copied, setCopied] = useState<string | null>(null);
   const [language, setLanguage] = useState<'english' | 'marathi'>('english');
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   useEffect(() => {
     if (inputValue.trim() === '') {
@@ -43,6 +44,51 @@ export default function NumberConverter() {
 
   return (
     <div className="max-w-4xl mx-auto p-4 sm:p-6">
+      {/* Mobile Language Dropdown - Top Right Corner */}
+      <div className="sm:hidden fixed top-20 right-4 z-40">
+        <div className="relative">
+          <button
+            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+            className="flex items-center gap-1 px-3 py-2 bg-white border-2 border-gray-200 rounded-lg shadow-lg text-sm font-medium text-gray-700 hover:border-gray-300 transition-all duration-200"
+          >
+            <Globe className="w-4 h-4" />
+            <span>{language === 'english' ? 'EN' : 'मर'}</span>
+            <ChevronDown className={`w-3 h-3 transition-transform duration-200 ${isDropdownOpen ? 'rotate-180' : ''}`} />
+          </button>
+          
+          {isDropdownOpen && (
+            <div className="absolute top-full right-0 mt-1 bg-white border-2 border-gray-200 rounded-lg shadow-xl overflow-hidden min-w-[120px]">
+              <button
+                onClick={() => {
+                  setLanguage('english');
+                  setIsDropdownOpen(false);
+                }}
+                className={`w-full px-3 py-2 text-left text-sm font-medium transition-colors duration-200 ${
+                  language === 'english'
+                    ? 'bg-blue-50 text-blue-700 border-l-4 border-blue-500'
+                    : 'text-gray-700 hover:bg-gray-50'
+                }`}
+              >
+                English
+              </button>
+              <button
+                onClick={() => {
+                  setLanguage('marathi');
+                  setIsDropdownOpen(false);
+                }}
+                className={`w-full px-3 py-2 text-left text-sm font-medium transition-colors duration-200 ${
+                  language === 'marathi'
+                    ? 'bg-orange-50 text-orange-700 border-l-4 border-orange-500'
+                    : 'text-gray-700 hover:bg-gray-50'
+                }`}
+              >
+                मराठी
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
+
       <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
         {/* Input Section */}
         <div className="p-4 sm:p-6 lg:p-8">
@@ -74,8 +120,8 @@ export default function NumberConverter() {
             )}
           </div>
 
-          {/* Language Options */}
-          <div className="mb-6 sm:mb-8">
+          {/* Language Options - Desktop Only */}
+          <div className="mb-6 sm:mb-8 hidden sm:block">
             <div className="flex items-center gap-2 mb-3">
               <Globe className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
               <span className="text-sm sm:text-base font-medium text-gray-700">
@@ -105,6 +151,7 @@ export default function NumberConverter() {
               </button>
             </div>
           </div>
+
           {/* Results Section */}
           {number !== null && (
             <div className="space-y-4 sm:space-y-6">
