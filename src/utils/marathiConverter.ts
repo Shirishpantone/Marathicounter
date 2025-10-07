@@ -173,7 +173,11 @@ export function convertToMarathiWords(num: number): string {
   // Hundreds (100)
   if (num >= 100) {
     const hundreds = Math.floor(num / 100);
-    result += convertToMarathiWords(hundreds) + ' शे ';
+    if (hundreds === 1) {
+      result += 'एकशे ';
+    } else {
+      result += convertToMarathiWords(hundreds) + 'शे ';
+    }
     num %= 100;
   }
 
