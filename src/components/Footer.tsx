@@ -55,7 +55,7 @@ export default function Footer({ onNavigate }: FooterProps) {
             <ul className="text-gray-600 text-sm space-y-1">
               <li>• Convert to Devanagari numerals</li>
               <li>• Convert to Marathi words</li>
-              <li>• Support up to 99 lakh crores with अर्ब</li>
+              <li>• Support metric system with अर्ब (100 crores)</li>
               <li>• One-click copy functionality</li>
               <li>• Mobile-friendly design</li>
               <li>• Completely free to use</li>
