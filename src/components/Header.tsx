@@ -1,9 +1,9 @@
 import React from 'react';
-import { Calculator, FileText, Shield, Menu, X } from 'lucide-react';
+import { Calculator, FileText, Shield, Menu, X, Book } from 'lucide-react';
 
 interface HeaderProps {
-  currentPage: 'converter' | 'terms' | 'privacy';
-  onNavigate: (page: 'converter' | 'terms' | 'privacy') => void;
+  currentPage: 'converter' | 'dictionary' | 'terms' | 'privacy';
+  onNavigate: (page: 'converter' | 'dictionary' | 'terms' | 'privacy') => void;
 }
 
 export default function Header({ currentPage, onNavigate }: HeaderProps) {
@@ -13,7 +13,7 @@ export default function Header({ currentPage, onNavigate }: HeaderProps) {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
-  const handleNavigate = (page: 'converter' | 'terms' | 'privacy') => {
+  const handleNavigate = (page: 'converter' | 'dictionary' | 'terms' | 'privacy') => {
     onNavigate(page);
     setIsMobileMenuOpen(false);
   };
@@ -45,10 +45,22 @@ export default function Header({ currentPage, onNavigate }: HeaderProps) {
                 <Calculator className="w-3 h-3 sm:w-4 sm:h-4" />
                 <span className="hidden md:inline">Converter</span>
               </button>
-              
+
+              <button
+                onClick={() => onNavigate('dictionary')}
+                className={`flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-2 rounded-lg transition-colors duration-200 text-sm sm:text-base ${
+                  currentPage === 'dictionary'
+                    ? 'bg-indigo-100 text-indigo-700'
+                    : 'text-gray-600 hover:text-gray-800 hover:bg-gray-100'
+                }`}
+              >
+                <Book className="w-3 h-3 sm:w-4 sm:h-4" />
+                <span className="hidden md:inline">Dictionary</span>
+              </button>
+
               <button
                 onClick={() => onNavigate('terms')}
-                className={\`flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-2 rounded-lg transition-colors duration-200 text-sm sm:text-base ${
+                className={`flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-2 rounded-lg transition-colors duration-200 text-sm sm:text-base ${
                   currentPage === 'terms'
                     ? 'bg-blue-100 text-blue-700'
                     : 'text-gray-600 hover:text-gray-800 hover:bg-gray-100'
@@ -57,10 +69,10 @@ export default function Header({ currentPage, onNavigate }: HeaderProps) {
                 <FileText className="w-3 h-3 sm:w-4 sm:h-4" />
                 <span className="hidden md:inline">Terms</span>
               </button>
-              
+
               <button
                 onClick={() => onNavigate('privacy')}
-                className={\`flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-2 rounded-lg transition-colors duration-200 text-sm sm:text-base ${
+                className={`flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-2 rounded-lg transition-colors duration-200 text-sm sm:text-base ${
                   currentPage === 'privacy'
                     ? 'bg-green-100 text-green-700'
                     : 'text-gray-600 hover:text-gray-800 hover:bg-gray-100'
@@ -97,7 +109,19 @@ export default function Header({ currentPage, onNavigate }: HeaderProps) {
               <Calculator className="w-4 h-4" />
               Converter
             </button>
-            
+
+            <button
+              onClick={() => handleNavigate('dictionary')}
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors duration-200 text-base ${
+                currentPage === 'dictionary'
+                  ? 'bg-indigo-100 text-indigo-700'
+                  : 'text-gray-600 hover:text-gray-800 hover:bg-gray-100'
+              }`}
+            >
+              <Book className="w-4 h-4" />
+              Dictionary
+            </button>
+
             <button
               onClick={() => handleNavigate('terms')}
               className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors duration-200 text-base ${
@@ -109,7 +133,7 @@ export default function Header({ currentPage, onNavigate }: HeaderProps) {
               <FileText className="w-4 h-4" />
               Terms
             </button>
-            
+
             <button
               onClick={() => handleNavigate('privacy')}
               className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors duration-200 text-base ${
