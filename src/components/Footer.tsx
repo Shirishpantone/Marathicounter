@@ -1,77 +1,76 @@
 import React from 'react';
-import { Heart, FileText, Shield } from 'lucide-react';
+import { Calculator, FileText, Shield, Menu, X } from 'lucide-react';
 
-interface FooterProps {
-  onNavigate: (page: 'converter' | 'terms' | 'privacy') => void;
+interface HeaderProps {
+  currentPage: 'converter' | 'dictionary' | 'terms' | 'privacy';
+  onNavigate: (page: 'converter' | 'dictionary' | 'terms' | 'privacy') => void;
 }
 
-export default function Footer({ onNavigate }: FooterProps) {
-  return (
-    <footer className="bg-gray-50 border-t border-gray-200 mt-12">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-          {/* About */}
-          <div>
-            <h3 className="font-semibold text-gray-800 mb-3 text-sm sm:text-base">मराठी संख्या रूपांतरक</h3>
-            <p className="text-gray-600 text-xs sm:text-sm leading-relaxed">
-              A free online tool to convert numbers into Marathi numerals and words. 
-              Perfect for students, teachers, and anyone working with Marathi language.
-            </p>
-            <p className="text-gray-600 text-xs sm:text-sm mt-2">
-              संख्यांचे मराठी अंकात आणि शब्दांत रूपांतरण करणारे मोफत साधन.
-            </p>
-          </div>
+export default function Header({ currentPage, onNavigate }: HeaderProps) {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
+                onClick={() => handleNavigate('converter')}
+                className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors duration-200 text-base ${
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
 
-          {/* Quick Links */}
-          <div>
-            <h3 className="font-semibold text-gray-800 mb-3 text-sm sm:text-base">Quick Links</h3>
-            <div className="space-y-2">
-              <button
-                onClick={() => onNavigate('converter')}
-                className="flex items-center gap-2 text-gray-600 hover:text-orange-600 transition-colors duration-200 text-xs sm:text-sm"
-              >
-                Number Converter
-              </button>
-              <button
-                onClick={() => onNavigate('terms')}
-                className="flex items-center gap-2 text-gray-600 hover:text-blue-600 transition-colors duration-200 text-xs sm:text-sm"
-              >
-                <FileText className="w-3 h-3 sm:w-4 sm:h-4" />
-                Terms & Conditions
-              </button>
-              <button
-                onClick={() => onNavigate('privacy')}
-                className="flex items-center gap-2 text-gray-600 hover:text-green-600 transition-colors duration-200 text-xs sm:text-sm"
-              >
-                <Shield className="w-3 h-3 sm:w-4 sm:h-4" />
-                Privacy Policy
-              </button>
+  const handleNavigate = (page: 'converter' | 'dictionary' | 'terms' | 'privacy') => {
+    onNavigate(page);
+                <Calculator className="w-4 h-4" />
+                Converter
+
+  return (
+    <>
+                onClick={() => handleNavigate('terms')}
+        <div className="flex items-center justify-between flex-wrap gap-4">
+          {/* Logo */}
+          <div className="flex items-center gap-2 sm:gap-3">
+            <Calculator className="w-6 h-6 sm:w-8 sm:h-8 text-orange-600" />
+            <div>
+              <h1 className="text-lg sm:text-xl font-bold text-orange-600">मराठी संख्या रूपांतरक</h1>
+              <p className="text-xs sm:text-sm text-gray-500 hidden sm:block">Marathi Number Converter</p>
             </div>
           </div>
 
-          {/* Features */}
-          <div className="sm:col-span-2 lg:col-span-1">
-            <h3 className="font-semibold text-gray-800 mb-3 text-sm sm:text-base">Features</h3>
-            <ul className="text-gray-600 text-xs sm:text-sm space-y-1">
-              <li>• Convert to Devanagari numerals</li>
-              <li>• Convert to Marathi words</li>
-              <li>• Support metric system with अर्ब (100 crores)</li>
-              <li>• One-click copy functionality</li>
-              <li>• Mobile-friendly design</li>
-              <li>• Completely free to use</li>
-            </ul>
-          </div>
-        </div>
-
-        <div className="border-t border-gray-200 mt-6 sm:mt-8 pt-4 sm:pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4">
-          <p className="text-gray-500 text-xs sm:text-sm text-center sm:text-left">
-            © {new Date().getFullYear()} Marathi Number Converter. All rights reserved.
-          </p>
-          <p className="flex items-center gap-1 text-gray-500 text-xs sm:text-sm">
-            Made with <Heart className="w-3 h-3 sm:w-4 sm:h-4 text-red-500" /> for Marathi language
-          </p>
+            {/* Desktop Navigation */}
+            <nav className="hidden md:flex items-center gap-4 lg:gap-6">
+            <button
+              onClick={() => onNavigate('converter')}
+              className={`flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-2 rounded-lg transition-colors duration-200 text-sm sm:text-base ${
+                currentPage === 'converter'
+                  ? 'bg-orange-100 text-orange-700'
+                  : 'text-gray-600 hover:text-gray-800 hover:bg-gray-100'
+              }`}
+            >
+              <Calculator className="w-3 h-3 sm:w-4 sm:h-4" />
+              <span className="hidden md:inline">Converter</span>
+            </button>
+            
+            <button
+              onClick={() => onNavigate('terms')}
+              className={`flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-2 rounded-lg transition-colors duration-200 text-sm sm:text-base ${
+                currentPage === 'terms'
+                  ? 'bg-blue-100 text-blue-700'
+                  : 'text-gray-600 hover:text-gray-800 hover:bg-gray-100'
+              }`}
+            >
+              <FileText className="w-3 h-3 sm:w-4 sm:h-4" />
+              <span className="hidden md:inline">Terms</span>
+            </button>
+            
+            <button
+              onClick={() => onNavigate('privacy')}
+              className={`flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-2 rounded-lg transition-colors duration-200 text-sm sm:text-base ${
+                currentPage === 'privacy'
+                  ? 'bg-green-100 text-green-700'
+                  : 'text-gray-600 hover:text-gray-800 hover:bg-gray-100'
+              }`}
+            >
+              <Shield className="w-3 h-3 sm:w-4 sm:h-4" />
+              <span className="hidden md:inline">Privacy</span>
+            </button>
+          </nav>
         </div>
       </div>
-    </footer>
+    </header>
   );
 }

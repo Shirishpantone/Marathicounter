@@ -1,5 +1,5 @@
 import React from 'react';
-import { Calculator, FileText, Shield } from 'lucide-react';
+import { Calculator, FileText, Shield, Menu, X } from 'lucide-react';
 
 interface HeaderProps {
   currentPage: 'converter' | 'terms' | 'privacy';
@@ -7,9 +7,20 @@ interface HeaderProps {
 }
 
 export default function Header({ currentPage, onNavigate }: HeaderProps) {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
+                onClick={() => handleNavigate('converter')}
+                className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors duration-200 text-base ${
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  const handleNavigate = (page: 'converter' | 'terms' | 'privacy') => {
+    onNavigate(page);
+                <Calculator className="w-4 h-4" />
+                Converter
+
   return (
-    <header className="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-30">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
+    <>
+                onClick={() => handleNavigate('terms')}
         <div className="flex items-center justify-between flex-wrap gap-4">
           {/* Logo */}
           <div className="flex items-center gap-2 sm:gap-3">
@@ -20,8 +31,8 @@ export default function Header({ currentPage, onNavigate }: HeaderProps) {
             </div>
           </div>
 
-          {/* Navigation */}
-          <nav className="flex items-center gap-2 sm:gap-4 lg:gap-6">
+            {/* Desktop Navigation */}
+            <nav className="hidden md:flex items-center gap-4 lg:gap-6">
             <button
               onClick={() => onNavigate('converter')}
               className={`flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-2 rounded-lg transition-colors duration-200 text-sm sm:text-base ${
