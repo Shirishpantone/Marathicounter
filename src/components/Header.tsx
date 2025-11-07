@@ -48,7 +48,7 @@ export default function Header({ currentPage, onNavigate }: HeaderProps) {
               
               <button
                 onClick={() => onNavigate('terms')}
-                className={\`flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-2 rounded-lg transition-colors duration-200 text-sm sm:text-base ${
+                className={`flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-2 rounded-lg transition-colors duration-200 text-sm sm:text-base ${
                   currentPage === 'terms'
                     ? 'bg-blue-100 text-blue-700'
                     : 'text-gray-600 hover:text-gray-800 hover:bg-gray-100'
@@ -60,7 +60,7 @@ export default function Header({ currentPage, onNavigate }: HeaderProps) {
               
               <button
                 onClick={() => onNavigate('privacy')}
-                className={\`flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-2 rounded-lg transition-colors duration-200 text-sm sm:text-base ${
+                className={`flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-2 rounded-lg transition-colors duration-200 text-sm sm:text-base ${
                   currentPage === 'privacy'
                     ? 'bg-green-100 text-green-700'
                     : 'text-gray-600 hover:text-gray-800 hover:bg-gray-100'
