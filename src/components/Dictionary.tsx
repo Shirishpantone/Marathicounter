@@ -45,6 +45,7 @@ export default function Dictionary() {
   const [favorites, setFavorites] = useState<string[]>([]);
   const [copied, setCopied] = useState<string | null>(null);
   const [transliteratedText, setTransliteratedText] = useState('');
+  const [isTransliterating, setIsTransliterating] = useState(false);
   const [showContributeModal, setShowContributeModal] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
 
@@ -64,12 +65,42 @@ export default function Dictionary() {
   }, [searchTerm]);
 
   useEffect(() => {
-    if (inputLanguage === 'english' && searchTerm) {
-      const transliterated = transliterateToMarathi(searchTerm);
-      setTransliteratedText(transliterated);
-    } else {
-      setTransliteratedText('');
-    }
+    const transliterationTimeout = setTimeout(async () => {
+      if (inputLanguage === 'english' && searchTerm && searchTerm.trim().length > 0) {
+        setIsTransliterating(true);
+        try {
+          const response = await fetch(
+            `${GEMINI_API_URL}?word=${encodeURIComponent(searchTerm)}&language=${inputLanguage}`,
+            {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            }
+          );
+
+          if (response.ok) {
+            const data = await response.json();
+            if (data.entry && data.entry.marathi) {
+              setTransliteratedText(data.entry.marathi);
+            } else {
+              setTransliteratedText('');
+            }
+          } else {
+            setTransliteratedText('');
+          }
+        } catch (error) {
+          console.error('Transliteration error:', error);
+          setTransliteratedText('');
+        } finally {
+          setIsTransliterating(false);
+        }
+      } else {
+        setTransliteratedText('');
+      }
+    }, 500);
+
+    return () => clearTimeout(transliterationTimeout);
   }, [searchTerm, inputLanguage]);
 
   const performSearch = async (term: string) => {
@@ -279,10 +310,17 @@ export default function Dictionary() {
               )}
             </div>
 
-            {transliteratedText && (
+            {(transliteratedText || isTransliterating) && (
               <div className="bg-white/20 backdrop-blur-sm rounded-lg p-3">
-                <p className="text-white/80 text-sm">Transliteration:</p>
-                <p className="text-white font-medium text-lg">{transliteratedText}</p>
+                <p className="text-white/80 text-sm">Marathi Translation:</p>
+                {isTransliterating ? (
+                  <div className="flex items-center gap-2">
+                    <Loader className="animate-spin w-4 h-4 text-white" />
+                    <p className="text-white/60 text-sm">Translating...</p>
+                  </div>
+                ) : (
+                  <p className="text-white font-medium text-lg">{transliteratedText}</p>
+                )}
               </div>
             )}
           </div>
