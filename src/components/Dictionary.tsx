@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Search, Book, Volume2, Copy, Check, Keyboard, Globe, History, Star, ExternalLink, Shield, Plus, Loader } from 'lucide-react';
+import { Search, Scale, Volume2, Copy, Check, Keyboard, Globe, History, Star, ExternalLink, Shield, Plus, Loader } from 'lucide-react';
 import { VirtualKeyboard } from './VirtualKeyboard';
 import { transliterateToMarathi } from '../utils/transliteration';
 
@@ -199,18 +199,18 @@ export default function Dictionary() {
   return (
     <div className="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
       <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-200">
-        <div className="bg-gradient-to-r from-orange-500 to-red-500 px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+        <div className="bg-gradient-to-r from-blue-700 to-blue-900 px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-3 text-white">
-              <Book className="w-8 h-8 sm:w-10 sm:h-10" />
+              <Scale className="w-8 h-8 sm:w-10 sm:h-10" />
               <div>
-                <h1 className="text-2xl sm:text-4xl font-bold">English-Marathi Dictionary</h1>
-                <p className="text-orange-100 text-sm sm:text-base mt-1">इंग्रजी-मराठी शब्दकोश</p>
+                <h1 className="text-2xl sm:text-4xl font-bold">Legal Dictionary</h1>
+                <p className="text-blue-100 text-sm sm:text-base mt-1">कायदेशीर शब्दकोश - For Judiciary & Government</p>
               </div>
             </div>
             <button
               onClick={() => setShowContributeModal(true)}
-              className="hidden sm:flex items-center gap-2 bg-white text-orange-600 px-4 py-2 rounded-lg font-medium hover:bg-orange-50 transition-colors duration-200"
+              className="hidden sm:flex items-center gap-2 bg-white text-blue-700 px-4 py-2 rounded-lg font-medium hover:bg-blue-50 transition-colors duration-200"
             >
               <Plus className="w-4 h-4" />
               Contribute
@@ -224,7 +224,7 @@ export default function Dictionary() {
                   onClick={() => setInputLanguage('english')}
                   className={`px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
                     inputLanguage === 'english'
-                      ? 'bg-white text-orange-600 shadow-sm'
+                      ? 'bg-white text-blue-700 shadow-sm'
                       : 'text-white hover:bg-white/10'
                   }`}
                 >
@@ -234,7 +234,7 @@ export default function Dictionary() {
                   onClick={() => setInputLanguage('marathi')}
                   className={`px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
                     inputLanguage === 'marathi'
-                      ? 'bg-white text-orange-600 shadow-sm'
+                      ? 'bg-white text-blue-700 shadow-sm'
                       : 'text-white hover:bg-white/10'
                   }`}
                 >
@@ -246,7 +246,7 @@ export default function Dictionary() {
                 onClick={() => setShowVirtualKeyboard(!showVirtualKeyboard)}
                 className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-200 ${
                   showVirtualKeyboard
-                    ? 'bg-white text-orange-600 shadow-sm'
+                    ? 'bg-white text-blue-700 shadow-sm'
                     : 'bg-white/20 backdrop-blur-sm text-white hover:bg-white/30'
                 }`}
               >
@@ -263,13 +263,13 @@ export default function Dictionary() {
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 onKeyPress={handleKeyPress}
-                placeholder={inputLanguage === 'english' ? 'Type and press Enter to search...' : 'टाइप करा आणि शोधण्यासाठी Enter दाबा...'}
+                placeholder={inputLanguage === 'english' ? 'Search legal terms... (e.g., plaintiff, jurisdiction)' : 'कायदेशीर शब्द शोधा...'}
                 className="w-full pl-12 pr-24 py-4 text-lg border-0 rounded-xl focus:ring-4 focus:ring-white/30 transition-all duration-200 outline-none text-gray-800 shadow-lg"
               />
               <button
                 onClick={() => handleSearch(searchTerm)}
                 disabled={!searchTerm.trim() || isLoading}
-                className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-orange-500 hover:bg-orange-600 disabled:bg-gray-300 disabled:cursor-not-allowed text-white px-4 py-2 rounded-lg transition-colors duration-200 flex items-center gap-2"
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white px-4 py-2 rounded-lg transition-colors duration-200 flex items-center gap-2"
               >
                 {isLoading ? (
                   <Loader className="animate-spin w-5 h-5" />

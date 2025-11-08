@@ -34,57 +34,62 @@ Deno.serve(async (req: Request) => {
 
     let prompt = '';
     if (language === 'english') {
-      prompt = `Translate the following English word or phrase to Marathi and provide a comprehensive dictionary entry in JSON format:
+      prompt = `You are a specialized legal terminology translator for Indian Judiciary and Government offices. Translate the following English legal term or phrase to Marathi and provide a comprehensive legal dictionary entry in JSON format:
 
-Word/Phrase: "${word}"
+Legal Term/Phrase: "${word}"
 
 Provide the response in this exact JSON format:
 {
   "english": "${word}",
-  "marathi": "Marathi translation in Devanagari script",
-  "hindi": "Hindi translation in Devanagari script",
-  "part_of_speech": "noun/verb/adjective/adverb/phrase/etc",
+  "marathi": "Marathi legal translation in Devanagari script",
+  "hindi": "Hindi legal translation in Devanagari script",
+  "part_of_speech": "noun/verb/adjective/adverb/phrase/legal term",
   "pronunciation": "Romanized pronunciation",
-  "definition": "Clear English definition",
+  "definition": "Clear legal definition in English with context for Indian legal system",
   "examples": [
     {
-      "english_sentence": "Example sentence in English",
-      "marathi_sentence": "Example sentence in Marathi (Devanagari)",
-      "source": "General usage"
+      "english_sentence": "Example sentence showing legal usage in context",
+      "marathi_sentence": "Legal example in Marathi (Devanagari)",
+      "source": "Legal context (e.g., Court proceedings, Legal documents, Government orders)"
     }
   ]
 }
 
-IMPORTANT:
-- Provide accurate translations in Devanagari script
-- Include 2-3 example sentences
+IMPORTANT GUIDELINES:
+- Provide accurate LEGAL translations in Devanagari script
+- Use terminology appropriate for Indian courts, judiciary, and government offices
+- Include 2-3 example sentences showing LEGAL usage
+- Focus on legal, judicial, and governmental context
+- For common legal terms, provide the standard Marathi equivalent used in Indian courts
 - Make sure the JSON is valid and complete
 - Return ONLY the JSON, no additional text`;
     } else {
-      prompt = `Translate the following Marathi word or phrase to English and provide a comprehensive dictionary entry in JSON format:
+      prompt = `You are a specialized legal terminology translator for Indian Judiciary and Government offices. Translate the following Marathi legal term or phrase to English and provide a comprehensive legal dictionary entry in JSON format:
 
-Word/Phrase: "${word}"
+Marathi Legal Term: "${word}"
 
 Provide the response in this exact JSON format:
 {
-  "english": "English translation",
+  "english": "English legal translation",
   "marathi": "${word}",
-  "hindi": "Hindi translation in Devanagari script",
-  "part_of_speech": "noun/verb/adjective/adverb/phrase/etc",
+  "hindi": "Hindi legal translation in Devanagari script",
+  "part_of_speech": "noun/verb/adjective/adverb/phrase/legal term",
   "pronunciation": "Romanized pronunciation",
-  "definition": "Clear English definition",
+  "definition": "Clear legal definition in English with context for Indian legal system",
   "examples": [
     {
-      "english_sentence": "Example sentence in English",
-      "marathi_sentence": "Example sentence in Marathi (Devanagari)",
-      "source": "General usage"
+      "english_sentence": "Example sentence showing legal usage in English",
+      "marathi_sentence": "Legal example in Marathi (Devanagari)",
+      "source": "Legal context (e.g., Court proceedings, Legal documents, Government orders)"
     }
   ]
 }
 
-IMPORTANT:
-- Provide accurate translations
-- Include 2-3 example sentences
+IMPORTANT GUIDELINES:
+- Provide accurate LEGAL translations
+- Use terminology appropriate for Indian courts, judiciary, and government offices
+- Include 2-3 example sentences showing LEGAL usage
+- Focus on legal, judicial, and governmental context
 - Make sure the JSON is valid and complete
 - Return ONLY the JSON, no additional text`;
     }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Calculator, FileText, Shield, Menu, X, Book } from 'lucide-react';
+import { Calculator, FileText, Shield, Menu, X, Scale } from 'lucide-react';
 
 interface HeaderProps {
   currentPage: 'converter' | 'dictionary' | 'terms' | 'privacy';
@@ -25,10 +25,10 @@ export default function Header({ currentPage, onNavigate }: HeaderProps) {
           <div className="flex items-center justify-between flex-wrap gap-4">
             {/* Logo */}
             <div className="flex items-center gap-2 sm:gap-3">
-              <Calculator className="w-6 h-6 sm:w-8 sm:h-8 text-orange-600" />
+              <Scale className="w-6 h-6 sm:w-8 sm:h-8 text-blue-700" />
               <div>
-                <h1 className="text-lg sm:text-xl font-bold text-orange-600">मराठी संख्या रूपांतरक</h1>
-                <p className="text-xs sm:text-sm text-gray-500 hidden sm:block">Marathi Number Converter</p>
+                <h1 className="text-lg sm:text-xl font-bold text-blue-700">कायदेशीर मराठी शब्दकोश</h1>
+                <p className="text-xs sm:text-sm text-gray-600 hidden sm:block">Legal Marathi Dictionary</p>
               </div>
             </div>
 
@@ -50,12 +50,12 @@ export default function Header({ currentPage, onNavigate }: HeaderProps) {
                 onClick={() => onNavigate('dictionary')}
                 className={`flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-2 rounded-lg transition-colors duration-200 text-sm sm:text-base ${
                   currentPage === 'dictionary'
-                    ? 'bg-indigo-100 text-indigo-700'
+                    ? 'bg-blue-100 text-blue-700'
                     : 'text-gray-600 hover:text-gray-800 hover:bg-gray-100'
                 }`}
               >
-                <Book className="w-3 h-3 sm:w-4 sm:h-4" />
-                <span className="hidden md:inline">Dictionary</span>
+                <Scale className="w-3 h-3 sm:w-4 sm:h-4" />
+                <span className="hidden md:inline">Legal Dictionary</span>
               </button>
 
               <button
@@ -114,12 +114,12 @@ export default function Header({ currentPage, onNavigate }: HeaderProps) {
               onClick={() => handleNavigate('dictionary')}
               className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors duration-200 text-base ${
                 currentPage === 'dictionary'
-                  ? 'bg-indigo-100 text-indigo-700'
+                  ? 'bg-blue-100 text-blue-700'
                   : 'text-gray-600 hover:text-gray-800 hover:bg-gray-100'
               }`}
             >
-              <Book className="w-4 h-4" />
-              Dictionary
+              <Scale className="w-4 h-4" />
+              Legal Dictionary
             </button>
 
             <button
