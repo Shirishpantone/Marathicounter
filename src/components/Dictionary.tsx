@@ -11,6 +11,7 @@ interface DictionaryEntry {
   part_of_speech: string;
   pronunciation: string;
   definition: string;
+  marathi_definition?: string;
   ipa_pronunciation?: string;
   audio_url?: string;
   examples: Array<{
@@ -401,22 +402,28 @@ export default function Dictionary() {
                               <span className="font-semibold text-gray-800">IPA:</span> /{entry.ipa_pronunciation}/
                             </p>
                           )}
-                          {entry.hindi && (
-                            <p className="text-gray-700">
-                              <span className="font-semibold text-gray-800">Hindi:</span> {entry.hindi}
-                            </p>
-                          )}
                         </div>
 
-                        <p className="text-gray-700 leading-relaxed text-lg">{entry.definition}</p>
+                        <div className="space-y-4">
+                          <div>
+                            <p className="text-sm font-semibold text-gray-600 mb-1">English Definition:</p>
+                            <p className="text-gray-700 leading-relaxed text-lg">{entry.definition}</p>
+                          </div>
+                          {entry.marathi_definition && (
+                            <div>
+                              <p className="text-sm font-semibold text-gray-600 mb-1">मराठी व्याख्या (Marathi Definition):</p>
+                              <p className="text-blue-700 leading-relaxed text-lg font-medium">{entry.marathi_definition}</p>
+                            </div>
+                          )}
+                        </div>
                       </div>
                     </div>
 
                     {entry.examples && entry.examples.length > 0 && (
                       <div className="pt-4 border-t border-gray-200">
                         <h4 className="font-semibold text-gray-800 mb-3 flex items-center gap-2">
-                          <span className="text-lg">💬</span>
-                          Example Sentences
+                          <span className="text-lg">📖</span>
+                          Reference Sentences
                         </h4>
                         <div className="space-y-3">
                           {entry.examples.map((example) => (

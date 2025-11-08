@@ -42,10 +42,10 @@ Provide the response in this exact JSON format:
 {
   "english": "${word}",
   "marathi": "Marathi legal translation in Devanagari script",
-  "hindi": "Hindi legal translation in Devanagari script",
   "part_of_speech": "noun/verb/adjective/adverb/phrase/legal term",
   "pronunciation": "Romanized pronunciation",
   "definition": "Clear legal definition in English with context for Indian legal system",
+  "marathi_definition": "Complete legal definition in Marathi (Devanagari script) with context for Indian legal system",
   "examples": [
     {
       "english_sentence": "Example sentence showing legal usage in context",
@@ -57,6 +57,7 @@ Provide the response in this exact JSON format:
 
 IMPORTANT GUIDELINES:
 - Provide accurate LEGAL translations in Devanagari script
+- MUST include BOTH English definition AND Marathi definition (marathi_definition field)
 - Use terminology appropriate for Indian courts, judiciary, and government offices
 - Include 2-3 example sentences showing LEGAL usage
 - Focus on legal, judicial, and governmental context
@@ -72,10 +73,10 @@ Provide the response in this exact JSON format:
 {
   "english": "English legal translation",
   "marathi": "${word}",
-  "hindi": "Hindi legal translation in Devanagari script",
   "part_of_speech": "noun/verb/adjective/adverb/phrase/legal term",
   "pronunciation": "Romanized pronunciation",
   "definition": "Clear legal definition in English with context for Indian legal system",
+  "marathi_definition": "Complete legal definition in Marathi (Devanagari script) with context for Indian legal system",
   "examples": [
     {
       "english_sentence": "Example sentence showing legal usage in English",
