@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Search, Scale, Volume2, Copy, Check, Keyboard, Globe, History, Star, ExternalLink, Shield, Plus, Loader } from 'lucide-react';
+import { Search, Scale, Volume2, Copy, Check, Keyboard, Globe, History, Star, ExternalLink, Shield, Plus, Loader, Book } from 'lucide-react';
 import { VirtualKeyboard } from './VirtualKeyboard';
 import { transliterateToMarathi } from '../utils/transliteration';
 
