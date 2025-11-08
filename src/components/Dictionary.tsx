@@ -48,7 +48,8 @@ export default function Dictionary() {
   const [showContributeModal, setShowContributeModal] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
 
-  const API_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/dictionary-search`;
+  const GEMINI_API_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/gemini-translate`;
+  const DB_API_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/dictionary-search`;
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -75,8 +76,8 @@ export default function Dictionary() {
     setIsLoading(true);
 
     try {
-      const response = await fetch(
-        `${API_URL}?term=${encodeURIComponent(term)}&language=${inputLanguage}&limit=20`,
+      const geminiResponse = await fetch(
+        `${GEMINI_API_URL}?word=${encodeURIComponent(term)}&language=${inputLanguage}`,
         {
           method: 'GET',
           headers: {
@@ -85,11 +86,57 @@ export default function Dictionary() {
         }
       );
 
-      if (!response.ok) {
+      if (geminiResponse.ok) {
+        const geminiData = await geminiResponse.json();
+
+        if (geminiData.entry) {
+          const entry: DictionaryEntry = {
+            id: 'gemini-' + Date.now(),
+            english: geminiData.entry.english,
+            marathi: geminiData.entry.marathi,
+            hindi: geminiData.entry.hindi,
+            part_of_speech: geminiData.entry.part_of_speech,
+            pronunciation: geminiData.entry.pronunciation,
+            definition: geminiData.entry.definition,
+            examples: geminiData.entry.examples || [],
+            sources: [{
+              id: 'gemini-source',
+              name: 'Google Gemini AI',
+              type: 'dictionary',
+              credibility: 9
+            }]
+          };
+
+          setSearchResults({
+            entries: [entry],
+            suggestions: [],
+            totalResults: 1
+          });
+
+          if (term && !searchHistory.includes(term)) {
+            setSearchHistory(prev => [term, ...prev.slice(0, 9)]);
+          }
+
+          setIsLoading(false);
+          return;
+        }
+      }
+
+      const dbResponse = await fetch(
+        `${DB_API_URL}?term=${encodeURIComponent(term)}&language=${inputLanguage}&limit=20`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+
+      if (!dbResponse.ok) {
         throw new Error('Search failed');
       }
 
-      const data = await response.json();
+      const data = await dbResponse.json();
       setSearchResults(data);
 
       if (term && !searchHistory.includes(term)) {
