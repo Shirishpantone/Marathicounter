@@ -92,6 +92,7 @@ export default function Dictionary() {
             part_of_speech: geminiData.entry.part_of_speech,
             pronunciation: geminiData.entry.pronunciation,
             definition: geminiData.entry.definition,
+            marathi_definition: geminiData.entry.marathi_definition,
             examples: geminiData.entry.examples || [],
             sources: [{
               id: 'gemini-source',
