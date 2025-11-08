@@ -5,12 +5,7 @@ const corsHeaders = {
 };
 
 const GEMINI_API_KEY = 'AIzaSyANzEa1fccPWmW_JxTbaNLI3186NHfhydY';
-const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent';
-
-interface GeminiRequest {
-  word: string;
-  language: string;
-}
+const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent';
 
 Deno.serve(async (req: Request) => {
   if (req.method === 'OPTIONS') {
@@ -25,6 +20,8 @@ Deno.serve(async (req: Request) => {
     const word = url.searchParams.get('word');
     const language = url.searchParams.get('language') || 'english';
 
+    console.log('Received request:', { word, language });
+
     if (!word) {
       return new Response(
         JSON.stringify({ error: 'Word parameter is required' }),
@@ -37,44 +34,62 @@ Deno.serve(async (req: Request) => {
 
     let prompt = '';
     if (language === 'english') {
-      prompt = `Provide a comprehensive dictionary entry for the English word "${word}" with the following information in JSON format:
+      prompt = `Translate the following English word or phrase to Marathi and provide a comprehensive dictionary entry in JSON format:
+
+Word/Phrase: "${word}"
+
+Provide the response in this exact JSON format:
 {
   "english": "${word}",
-  "marathi": "Marathi translation",
-  "hindi": "Hindi translation",
-  "part_of_speech": "noun/verb/adjective/adverb/etc",
+  "marathi": "Marathi translation in Devanagari script",
+  "hindi": "Hindi translation in Devanagari script",
+  "part_of_speech": "noun/verb/adjective/adverb/phrase/etc",
   "pronunciation": "Romanized pronunciation",
   "definition": "Clear English definition",
   "examples": [
     {
       "english_sentence": "Example sentence in English",
-      "marathi_sentence": "Example sentence in Marathi",
+      "marathi_sentence": "Example sentence in Marathi (Devanagari)",
       "source": "General usage"
     }
   ]
 }
 
-Provide accurate translations in Devanagari script for both Marathi and Hindi. Include 2-3 example sentences showing usage. Make sure the JSON is valid and properly formatted.`;
+IMPORTANT:
+- Provide accurate translations in Devanagari script
+- Include 2-3 example sentences
+- Make sure the JSON is valid and complete
+- Return ONLY the JSON, no additional text`;
     } else {
-      prompt = `Provide a comprehensive dictionary entry for the Marathi word "${word}" with the following information in JSON format:
+      prompt = `Translate the following Marathi word or phrase to English and provide a comprehensive dictionary entry in JSON format:
+
+Word/Phrase: "${word}"
+
+Provide the response in this exact JSON format:
 {
   "english": "English translation",
   "marathi": "${word}",
-  "hindi": "Hindi translation",
-  "part_of_speech": "noun/verb/adjective/adverb/etc",
+  "hindi": "Hindi translation in Devanagari script",
+  "part_of_speech": "noun/verb/adjective/adverb/phrase/etc",
   "pronunciation": "Romanized pronunciation",
   "definition": "Clear English definition",
   "examples": [
     {
       "english_sentence": "Example sentence in English",
-      "marathi_sentence": "Example sentence in Marathi",
+      "marathi_sentence": "Example sentence in Marathi (Devanagari)",
       "source": "General usage"
     }
   ]
 }
 
-Provide accurate translations. Include 2-3 example sentences showing usage. Make sure the JSON is valid and properly formatted.`;
+IMPORTANT:
+- Provide accurate translations
+- Include 2-3 example sentences
+- Make sure the JSON is valid and complete
+- Return ONLY the JSON, no additional text`;
     }
+
+    console.log('Calling Gemini API...');
 
     const geminiResponse = await fetch(
       `${GEMINI_API_URL}?key=${GEMINI_API_KEY}`,
@@ -106,23 +121,69 @@ Provide accurate translations. Include 2-3 example sentences showing usage. Make
     if (!geminiResponse.ok) {
       const errorText = await geminiResponse.text();
       console.error('Gemini API error:', errorText);
-      throw new Error(`Gemini API error: ${geminiResponse.status}`);
+      return new Response(
+        JSON.stringify({ 
+          error: `Gemini API error: ${geminiResponse.status}`,
+          details: errorText
+        }),
+        {
+          status: 500,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        }
+      );
     }
 
     const geminiData = await geminiResponse.json();
-    
+    console.log('Gemini response received:', JSON.stringify(geminiData));
+
     if (!geminiData.candidates || geminiData.candidates.length === 0) {
-      throw new Error('No response from Gemini API');
+      console.error('No candidates in response');
+      return new Response(
+        JSON.stringify({
+          error: 'No response from Gemini API',
+          fullResponse: geminiData
+        }),
+        {
+          status: 500,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        }
+      );
     }
 
-    const responseText = geminiData.candidates[0].content.parts[0].text;
+    const responseText = geminiData.candidates?.[0]?.content?.parts?.[0]?.text;
+
+    if (!responseText) {
+      console.error('Could not extract text from response');
+      return new Response(
+        JSON.stringify({
+          error: 'Invalid response structure',
+          fullResponse: geminiData
+        }),
+        {
+          status: 500,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        }
+      );
+    }
+    console.log('Response text:', responseText);
     
     const jsonMatch = responseText.match(/\{[\s\S]*\}/);
     if (!jsonMatch) {
-      throw new Error('Could not extract JSON from response');
+      console.error('Could not extract JSON from response');
+      return new Response(
+        JSON.stringify({ 
+          error: 'Could not extract JSON from response',
+          rawResponse: responseText
+        }),
+        {
+          status: 500,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        }
+      );
     }
 
     const dictionaryEntry = JSON.parse(jsonMatch[0]);
+    console.log('Successfully parsed dictionary entry');
 
     return new Response(
       JSON.stringify({
