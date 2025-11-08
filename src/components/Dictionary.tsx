@@ -44,64 +44,26 @@ export default function Dictionary() {
   const [searchHistory, setSearchHistory] = useState<string[]>([]);
   const [favorites, setFavorites] = useState<string[]>([]);
   const [copied, setCopied] = useState<string | null>(null);
-  const [transliteratedText, setTransliteratedText] = useState('');
-  const [isTransliterating, setIsTransliterating] = useState(false);
   const [showContributeModal, setShowContributeModal] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
 
   const GEMINI_API_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/gemini-translate`;
   const DB_API_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/dictionary-search`;
 
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      if (searchTerm.trim()) {
-        performSearch(searchTerm);
-      } else {
-        setSearchResults(null);
-      }
-    }, 300);
+  const handleSearch = (term: string) => {
+    if (term.trim()) {
+      performSearch(term);
+    } else {
+      setSearchResults(null);
+    }
+  };
 
-    return () => clearTimeout(timeoutId);
-  }, [searchTerm]);
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      handleSearch(searchTerm);
+    }
+  };
 
-  useEffect(() => {
-    const transliterationTimeout = setTimeout(async () => {
-      if (inputLanguage === 'english' && searchTerm && searchTerm.trim().length > 0) {
-        setIsTransliterating(true);
-        try {
-          const response = await fetch(
-            `${GEMINI_API_URL}?word=${encodeURIComponent(searchTerm)}&language=${inputLanguage}`,
-            {
-              method: 'GET',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-            }
-          );
-
-          if (response.ok) {
-            const data = await response.json();
-            if (data.entry && data.entry.marathi) {
-              setTransliteratedText(data.entry.marathi);
-            } else {
-              setTransliteratedText('');
-            }
-          } else {
-            setTransliteratedText('');
-          }
-        } catch (error) {
-          console.error('Transliteration error:', error);
-          setTransliteratedText('');
-        } finally {
-          setIsTransliterating(false);
-        }
-      } else {
-        setTransliteratedText('');
-      }
-    }, 500);
-
-    return () => clearTimeout(transliterationTimeout);
-  }, [searchTerm, inputLanguage]);
 
   const performSearch = async (term: string) => {
     setIsLoading(true);
@@ -300,29 +262,26 @@ export default function Dictionary() {
                 type="text"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                placeholder={inputLanguage === 'english' ? 'Search for English words...' : 'मराठीत शोधा...'}
-                className="w-full pl-12 pr-4 py-4 text-lg border-0 rounded-xl focus:ring-4 focus:ring-white/30 transition-all duration-200 outline-none text-gray-800 shadow-lg"
+                onKeyPress={handleKeyPress}
+                placeholder={inputLanguage === 'english' ? 'Type and press Enter to search...' : 'टाइप करा आणि शोधण्यासाठी Enter दाबा...'}
+                className="w-full pl-12 pr-24 py-4 text-lg border-0 rounded-xl focus:ring-4 focus:ring-white/30 transition-all duration-200 outline-none text-gray-800 shadow-lg"
               />
-              {isLoading && (
-                <div className="absolute right-4 top-1/2 transform -translate-y-1/2">
-                  <Loader className="animate-spin w-5 h-5 text-orange-600" />
-                </div>
-              )}
+              <button
+                onClick={() => handleSearch(searchTerm)}
+                disabled={!searchTerm.trim() || isLoading}
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-orange-500 hover:bg-orange-600 disabled:bg-gray-300 disabled:cursor-not-allowed text-white px-4 py-2 rounded-lg transition-colors duration-200 flex items-center gap-2"
+              >
+                {isLoading ? (
+                  <Loader className="animate-spin w-5 h-5" />
+                ) : (
+                  <>
+                    <Search className="w-4 h-4" />
+                    <span className="hidden sm:inline">Search</span>
+                  </>
+                )}
+              </button>
             </div>
 
-            {(transliteratedText || isTransliterating) && (
-              <div className="bg-white/20 backdrop-blur-sm rounded-lg p-3">
-                <p className="text-white/80 text-sm">Marathi Translation:</p>
-                {isTransliterating ? (
-                  <div className="flex items-center gap-2">
-                    <Loader className="animate-spin w-4 h-4 text-white" />
-                    <p className="text-white/60 text-sm">Translating...</p>
-                  </div>
-                ) : (
-                  <p className="text-white font-medium text-lg">{transliteratedText}</p>
-                )}
-              </div>
-            )}
           </div>
         </div>
 
