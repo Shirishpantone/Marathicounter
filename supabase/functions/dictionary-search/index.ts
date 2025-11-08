@@ -57,17 +57,16 @@ Deno.serve(async (req: Request) => {
       throw error;
     }
 
-    const suggestions = await supabase
+    let suggestionQuery = supabase
       .from('dictionary_entries')
       .select('english, marathi')
       .eq('verified', true)
       .limit(5);
 
-    let suggestionQuery;
     if (language === 'english') {
-      suggestionQuery = suggestions.ilike('english', `${searchTerm}%`);
+      suggestionQuery = suggestionQuery.ilike('english', `${searchTerm}%`);
     } else {
-      suggestionQuery = suggestions.ilike('marathi', `${searchTerm}%`);
+      suggestionQuery = suggestionQuery.ilike('marathi', `${searchTerm}%`);
     }
 
     const { data: suggestionData } = await suggestionQuery;
