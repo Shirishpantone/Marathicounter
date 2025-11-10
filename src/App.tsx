@@ -1,32 +1,83 @@
 import { useState } from 'react';
-import Header from './components/Header';
-import Footer from './components/Footer';
-import NumberConverter from './components/NumberConverter';
+import { Toaster } from 'react-hot-toast';
+import { AuthProvider } from './contexts/AuthContext';
+import { Header } from './components/layout/Header';
+import { HomePage } from './components/pages/HomePage';
 import Dictionary from './components/Dictionary';
-import TermsAndConditions from './components/TermsAndConditions';
-import PrivacyPolicy from './components/PrivacyPolicy';
 
-type Page = 'converter' | 'dictionary' | 'terms' | 'privacy';
+type Page = 'home' | 'grammar' | 'dictionary' | 'features' | 'dashboard';
 
 export default function App() {
-  const [currentPage, setCurrentPage] = useState<Page>('converter');
+  const [currentPage, setCurrentPage] = useState<Page>('home');
 
-  const handleNavigate = (page: Page) => {
-    setCurrentPage(page);
+  const handleNavigate = (page: string) => {
+    setCurrentPage(page as Page);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
-      <Header currentPage={currentPage} onNavigate={handleNavigate} />
+    <AuthProvider>
+      <div className="min-h-screen bg-white">
+        <Toaster
+          position="top-right"
+          toastOptions={{
+            duration: 3000,
+            style: {
+              background: '#fff',
+              color: '#2C3E50',
+              borderRadius: '12px',
+              boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+            },
+            success: {
+              iconTheme: {
+                primary: '#27AE60',
+                secondary: '#fff',
+              },
+            },
+            error: {
+              iconTheme: {
+                primary: '#E74C3C',
+                secondary: '#fff',
+              },
+            },
+          }}
+        />
 
-      <main className="flex-1">
-        {currentPage === 'converter' && <NumberConverter />}
-        {currentPage === 'dictionary' && <Dictionary />}
-        {currentPage === 'terms' && <TermsAndConditions />}
-        {currentPage === 'privacy' && <PrivacyPolicy />}
-      </main>
+        <Header currentPage={currentPage} onNavigate={handleNavigate} />
 
-      <Footer />
-    </div>
+        <main className="pt-16 md:pt-20">
+          {currentPage === 'home' && <HomePage />}
+          {currentPage === 'dictionary' && (
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+              <Dictionary />
+            </div>
+          )}
+          {currentPage === 'grammar' && (
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+              <div className="text-center">
+                <h2 className="text-3xl font-bold text-charcoal mb-4">Grammar Checker</h2>
+                <p className="text-charcoal-light">Coming soon with AI-powered checking</p>
+              </div>
+            </div>
+          )}
+          {currentPage === 'features' && (
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+              <div className="text-center">
+                <h2 className="text-3xl font-bold text-charcoal mb-4">Features</h2>
+                <p className="text-charcoal-light">Scroll down on home page to see features</p>
+              </div>
+            </div>
+          )}
+          {currentPage === 'dashboard' && (
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+              <div className="text-center">
+                <h2 className="text-3xl font-bold text-charcoal mb-4">Dashboard</h2>
+                <p className="text-charcoal-light">Track your progress and statistics</p>
+              </div>
+            </div>
+          )}
+        </main>
+      </div>
+    </AuthProvider>
   );
 }
