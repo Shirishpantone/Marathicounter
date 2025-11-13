@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Generate MarathiCounter Icons</title>
+</head>
+<body>
+    <h2>Icon Generator for MarathiCounter</h2>
+    <p>Instructions: This will generate app icons. Open this file in a browser and it will create downloadable icons.</p>
+
+    <canvas id="canvas" style="display:none;"></canvas>
+    <div id="output"></div>
+
+    <script>
+        const sizes = [72, 96, 128, 144, 152, 192, 384, 512];
+        const output = document.getElementById('output');
+
+        sizes.forEach(size => {
+            const canvas = document.createElement('canvas');
+            canvas.width = size;
+            canvas.height = size;
+            const ctx = canvas.getContext('2d');
+
+            const gradient = ctx.createLinearGradient(0, 0, size, size);
+            gradient.addColorStop(0, '#1e40af');
+            gradient.addColorStop(1, '#3b82f6');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, size, size);
+
+            ctx.fillStyle = 'white';
+            ctx.font = `bold ${size * 0.3}px Arial`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('मर', size / 2, size / 2.2);
+
+            ctx.font = `bold ${size * 0.15}px Arial`;
+            ctx.fillText('Counter', size / 2, size / 1.5);
+
+            canvas.toBlob(blob => {
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.download = `icon-${size}x${size}.png`;
+                link.href = url;
+                link.textContent = `Download icon-${size}x${size}.png`;
+                link.style.display = 'block';
+                link.style.margin = '10px';
+                output.appendChild(link);
+            });
+        });
+    </script>
+</body>
+</html>
